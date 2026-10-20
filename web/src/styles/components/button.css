@@ -1,0 +1,207 @@
+/* Button · BEM: .btn / .btn--{variant|size|state} / .btn__{el} */
+
+.btn {
+  --btn-bg: var(--surface-2);
+  --btn-bg-hover: var(--surface-3);
+  --btn-fg: var(--text-1);
+  --btn-border: var(--border);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: var(--border-w) solid var(--btn-border);
+  border-radius: var(--radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover:not(:disabled):not(.is-loading) {
+  background: var(--btn-bg-hover);
+}
+
+.btn:active:not(:disabled):not(.is-loading) {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+/* ------------------------------------------------------------- 尺寸: size */
+
+.btn--sm {
+  min-height: 28px;
+  padding: 0 var(--space-3);
+  font-size: var(--fs-sm);
+}
+
+.btn--md {
+  min-height: 34px;
+  padding: 0 var(--space-4);
+  font-size: var(--fs-md);
+}
+
+.btn--lg {
+  min-height: 42px;
+  padding: 0 var(--space-5);
+  font-size: var(--fs-lg);
+}
+
+/* 方形象按钮：只放图标时保持正方形 */
+.btn--icon.btn--sm { width: 28px; padding: 0; }
+.btn--icon.btn--md { width: 34px; padding: 0; }
+.btn--icon.btn--lg { width: 42px; padding: 0; }
+
+/* --------------------------------------------------------------- 变体: variant */
+
+.btn--primary {
+  --btn-bg: var(--accent);
+  --btn-bg-hover: var(--accent-hover);
+  --btn-fg: var(--accent-fg);
+  --btn-border: transparent;
+}
+
+.btn--secondary {
+  --btn-bg: var(--surface-2);
+  --btn-bg-hover: var(--surface-3);
+  --btn-fg: var(--text-1);
+  --btn-border: var(--border);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--surface-2);
+  --btn-fg: var(--text-2);
+  --btn-border: transparent;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  --btn-fg: var(--text-1);
+}
+
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--accent-bg);
+  --btn-fg: var(--accent);
+  --btn-border: var(--accent);
+}
+
+.btn--danger {
+  --btn-bg: var(--danger);
+  --btn-bg-hover: var(--danger-hover);
+  --btn-fg: var(--danger-fg);
+  --btn-border: transparent;
+}
+
+.btn--danger-ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--danger-bg);
+  --btn-fg: var(--danger);
+  --btn-border: transparent;
+}
+
+.btn--link {
+  --btn-bg: transparent;
+  --btn-bg-hover: transparent;
+  --btn-fg: var(--accent);
+  --btn-border: transparent;
+  min-height: auto;
+  padding: 0;
+}
+
+.btn--link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ 状态 */
+
+.btn.is-error {
+  --btn-border: var(--danger);
+  --btn-fg: var(--danger);
+}
+
+.btn--primary.is-error,
+.btn--danger.is-error {
+  --btn-bg: var(--danger);
+  --btn-fg: var(--danger-fg);
+  --btn-border: transparent;
+}
+
+/* 禁用：降低对比但保持可读 */
+.btn:disabled,
+.btn.is-disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 加载：文案隐藏但占位保留，防止宽度跳动 */
+.btn.is-loading {
+  cursor: progress;
+}
+
+.btn__spinner {
+  display: inline-flex;
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+.btn__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.btn__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn__icon svg,
+.btn__icon img {
+  width: 1em;
+  height: 1em;
+}
+
+/* 块级按钮 */
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+/* 按钮组：相邻按钮共享边框，逗号式分隔 */
+.btn-group {
+  display: inline-flex;
+}
+
+.btn-group > .btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: calc(-1 * var(--border-w));
+}
+
+.btn-group > .btn:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.btn-group > .btn:focus-visible {
+  z-index: 1;
+}

@@ -1,0 +1,35 @@
+# Go
+/imgen
+/imgen.exe
+/imgen.exe~
+/dist/
+
+# 数据目录（含 SQLite、图片、主密钥 —— 绝不入库）
+/data/
+# 误运行时在源码目录内生成的数据（正常部署不会出现）
+/cmd/imgen/data/
+
+# 构建产物
+internal/web/dist/
+
+# Node
+node_modules/
+web/.vite/
+*.local
+*.tsbuildinfo
+
+# 冒烟脚本的临时数据目录（内含 SQLite 与临时 master.key）
+.smoke-tmp/
+.m0probe/
+.tmpdiag/
+.e2e-*/
+
+# Go 构建缓存（本机为加速 go build 而在仓库内建的 GOCACHE，体积巨大且与机器相关）
+/.gocache/
+
+# 密钥与本地配置兜底（正常不会出现在源码树，多一层保险）
+*.key
+.env
+.env.*
+!*.key.example
+*.pem

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>Imgen · 未构建前端</title>
+    <style>
+      body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+             background:#0f1115; color:#c9d1d9; font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+      main { max-width:32rem; padding:2rem; text-align:center; }
+      code { background:#1b1f27; padding:.15rem .4rem; border-radius:4px; color:#e6b980; }
+      h1 { font-size:1.1rem; color:#e6edf3; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>前端产物尚未构建</h1>
+      <p>这是 <code>internal/web/dist_stub</code> 占位页，仅为保证纯后端（<code>go build ./...</code>）可编译。</p>
+      <p>执行 <code>pnpm --dir web build</code> 生成 <code>internal/web/dist</code> 后，本页会被真实前端覆盖。</p>
+    </main>
+  </body>
+</html>

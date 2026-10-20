@@ -1,0 +1,23 @@
+# Go build artifacts
+/imgen.exe
+/imgen
+*/bin/
+dist/
+
+# Data & local secrets (never in image)
+/data/
+/cmd/imgen/data/
+*.key
+*.db
+
+# Node / frontend tooling (web/ source is needed)
+web/node_modules/
+web/.vite/
+web/*.local
+
+# Go toolchain caches
+.DS_Store
+vendor/
+
+# Dev only
+internal/web/dist_stub/

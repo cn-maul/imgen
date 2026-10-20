@@ -1,0 +1,232 @@
+/* Checkbox · BEM: .checkbox / .checkbox__box / .checkbox__label */
+
+.checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-1);
+}
+
+.checkbox__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox__box {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin-top: 0.2em;
+  border: var(--border-w) solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--accent-fg);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.checkbox:hover:not(.is-disabled) .checkbox__box {
+  border-color: var(--accent);
+}
+
+.checkbox__box svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.checkbox.is-checked .checkbox__box {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.checkbox.is-checked .checkbox__box svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox.is-indeterminate .checkbox__box {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.checkbox.is-indeterminate .checkbox__box svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox__native:focus-visible + .checkbox__box {
+  box-shadow: var(--ring);
+}
+
+.checkbox.is-error .checkbox__box {
+  border-color: var(--danger);
+}
+
+.checkbox.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox.is-loading {
+  cursor: progress;
+}
+
+.checkbox__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.checkbox__label {
+  min-width: 0;
+}
+
+.checkbox__desc {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  line-height: var(--lh-normal);
+}
+
+/* ------------------------------------------------------------------ 开关态 */
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch__track {
+  position: relative;
+  flex: none;
+  width: 34px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--text-1);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.switch.is-checked .switch__track {
+  background: var(--accent);
+}
+
+.switch.is-checked .switch__thumb {
+  transform: translateX(14px);
+  background: var(--accent-fg);
+}
+
+.switch__native:focus-visible + .switch__track {
+  box-shadow: var(--ring);
+}
+
+.switch.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* -------------------------------------------------------------- 单选组 */
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.radio:hover:not(.is-disabled) {
+  border-color: var(--border-strong);
+  color: var(--text-1);
+}
+
+.radio.is-checked {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-1);
+}
+
+.radio.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.radio__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  border: var(--border-w) solid var(--border-strong);
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.radio.is-checked .radio__dot {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.radio__native:focus-visible + .radio__dot {
+  box-shadow: var(--ring);
+}

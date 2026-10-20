@@ -1,0 +1,417 @@
+/* ============================================================================
+ * 表单控件：Input / Textarea / Select
+ * BEM: .field（容器）/ .field__label / .field__hint / .field__error
+ *      .input / .input__wrap / .input__prefix / .input__suffix
+ *      .textarea / .select
+ * ========================================================================== */
+
+/* ------------------------------------------------------- 字段容器 .field */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.field__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-2);
+  line-height: var(--lh-tight);
+}
+
+.field__label .is-required {
+  margin-left: var(--space-1);
+  color: var(--danger);
+}
+
+.field__hint {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  line-height: var(--lh-normal);
+}
+
+.field__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+  color: var(--danger);
+  line-height: var(--lh-normal);
+}
+
+.field.is-error .field__label {
+  color: var(--danger);
+}
+
+.field.is-disabled {
+  opacity: 0.55;
+}
+
+/* ---------------------------------------------------------------- .input */
+
+.input__wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  padding: 0 var(--space-3);
+  min-height: 34px;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.input__wrap:hover:not(.is-disabled):not(.is-readonly) {
+  border-color: var(--border-strong);
+}
+
+.input__wrap:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.input__wrap.is-error {
+  border-color: var(--danger);
+}
+
+.input__wrap.is-error:focus-within {
+  box-shadow: 0 0 0 3px var(--danger-bg);
+}
+
+.input__wrap.is-disabled {
+  background: var(--surface-1);
+  cursor: not-allowed;
+}
+
+.input__wrap.is-loading {
+  cursor: progress;
+}
+
+.input__prefix,
+.input__suffix {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+}
+
+.input__prefix svg,
+.input__suffix svg {
+  width: 1em;
+  height: 1em;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-1);
+  background: transparent;
+  padding-block: var(--space-2);
+}
+
+.input:focus-visible {
+  box-shadow: none; /* 焦点环由 .input__wrap 承担 */
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--text-3);
+}
+
+.input--sm .input__wrap { min-height: 28px; }
+.input--sm .input { font-size: var(--fs-sm); }
+.input--lg .input__wrap { min-height: 42px; }
+.input--lg .input { font-size: var(--fs-lg); }
+
+.input--mono .input {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+/* 清除按钮 */
+.input__clear {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  color: var(--text-3);
+  transition: color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.input__clear:hover {
+  color: var(--text-1);
+  background: var(--surface-3);
+}
+
+.input__clear:focus-visible {
+  box-shadow: var(--ring);
+}
+
+/* ------------------------------------------------------------- .textarea */
+
+.textarea-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.textarea__wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.textarea__wrap:hover:not(.is-disabled):not(.is-readonly) {
+  border-color: var(--border-strong);
+}
+
+.textarea__wrap:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.textarea__wrap.is-error {
+  border-color: var(--danger);
+}
+
+.textarea__wrap.is-error:focus-within {
+  box-shadow: 0 0 0 3px var(--danger-bg);
+}
+
+.textarea__wrap.is-disabled {
+  background: var(--surface-1);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 84px;
+  padding: var(--space-3);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-1);
+  background: transparent;
+  border-radius: var(--radius-md);
+  resize: vertical;
+}
+
+.textarea:focus-visible {
+  box-shadow: none;
+}
+
+.textarea:disabled {
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.textarea--auto .textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.textarea__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: 0 var(--space-3) var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.textarea__count.is-over {
+  color: var(--danger);
+}
+
+/* --------------------------------------------------------------- .select */
+
+.select__wrap {
+  position: relative;
+  display: block;
+}
+
+.select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text-1);
+  font-size: var(--fs-md);
+  text-align: left;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.select__trigger:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.select__trigger:focus-visible {
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+
+.select__wrap.is-open .select__trigger {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.select__wrap.is-error .select__trigger {
+  border-color: var(--danger);
+}
+
+.select__trigger.is-disabled {
+  background: var(--surface-1);
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.select__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__value.is-placeholder {
+  color: var(--text-3);
+}
+
+.select__arrow {
+  flex: none;
+  display: inline-flex;
+  color: var(--text-3);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.select__arrow svg {
+  width: 1em;
+  height: 1em;
+}
+
+.select__wrap.is-loading .select__arrow svg {
+  width: 1em;
+  height: 1em;
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+.select__wrap.is-open .select__arrow {
+  transform: rotate(180deg);
+}
+
+.select__listbox {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  inset-inline: 0;
+  margin-top: var(--space-1);
+  max-height: 260px;
+  overflow-y: auto;
+  padding: var(--space-1);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  list-style: none;
+}
+
+.select__listbox--up {
+  margin-top: 0;
+  margin-bottom: var(--space-1);
+  top: auto;
+  bottom: 100%;
+}
+
+.select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  font-size: var(--fs-md);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.select__option:hover:not(.is-disabled),
+.select__option.is-active {
+  background: var(--surface-2);
+}
+
+.select__option.is-selected {
+  color: var(--accent);
+  font-weight: var(--fw-medium);
+}
+
+.select__option.is-disabled {
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.select__option:focus-visible {
+  box-shadow: var(--ring);
+}
+
+.select__option-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__check {
+  flex: none;
+  display: inline-flex;
+  color: var(--accent);
+}
+
+.select__check svg {
+  width: 1em;
+  height: 1em;
+}
+
+.select__empty {
+  padding: var(--space-3);
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+  text-align: center;
+}

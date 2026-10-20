@@ -1,0 +1,240 @@
+/* ============================================================================
+ * Imgen · 基础层：reset、排版基线、滚动条、可访问性
+ * ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 工作台是应用型页面，滚动交给内部容器 */
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-1);
+  background: var(--surface-0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#app {
+  height: 100%;
+}
+
+/* ------------------------------------------------------------------ 排版 */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--text-1);
+}
+
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+h5 { font-size: var(--fs-md); }
+h6 { font-size: var(--fs-sm); }
+
+p { line-height: var(--lh-normal); }
+
+small { font-size: var(--fs-xs); }
+
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+
+pre {
+  overflow: auto;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+a:hover { color: var(--accent-hover); }
+
+strong, b { font-weight: var(--fw-semibold); }
+
+hr {
+  height: 0;
+  border: 0;
+  border-top: var(--border-w) solid var(--border);
+}
+
+/* ------------------------------------------------------------------ 媒体 */
+
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img { height: auto; }
+
+/* ------------------------------------------------------------------ 表单 */
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+
+button { cursor: pointer; }
+
+button:disabled { cursor: not-allowed; }
+
+textarea { resize: vertical; }
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-3);
+  opacity: 1;
+}
+
+/* 去掉 number 输入的原生步进器，Slider/张数用自绘控件 */
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+fieldset {
+  border: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* -------------------------------------------------------------- 滚动条 */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: var(--radius-full);
+  background: var(--scrollbar-thumb);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------- 文本选择 */
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+/* ------------------------------------------------- 可访问性：焦点可见环 */
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+/* 只有键盘触发时才出现，且组件自身若已有 ring 用 .no-ring 关闭 */
+.no-ring:focus-visible,
+.no-ring *:focus-visible {
+  box-shadow: none;
+}
+
+/* --------------------------------------------------- 可访问性：减弱动效 */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------- 高对比度偏好 */
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: var(--border-strong);
+  }
+}
+
+/* ---------------------------------------------------------- 打印（极少） */
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

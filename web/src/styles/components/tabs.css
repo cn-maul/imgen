@@ -1,0 +1,140 @@
+/* Tabs · BEM: .tabs / .tabs__list / .tabs__tab / .tabs__panel */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.tabs__list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  border-bottom: var(--border-w) solid var(--border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs__list--fill {
+  gap: 0;
+}
+
+.tabs__list--pills {
+  border-bottom: 0;
+  gap: var(--space-2);
+}
+
+.tabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-2);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.tabs__tab:hover:not(:disabled):not(.is-active) {
+  color: var(--text-1);
+}
+
+.tabs__tab.is-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tabs__tab:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+.tabs__tab:disabled,
+.tabs__tab.is-disabled {
+  color: var(--text-3);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.tabs__tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+}
+
+.tabs__tab.is-active .tabs__tab-badge {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* pills 变体 */
+.tabs__list--pills .tabs__tab {
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-1);
+}
+
+.tabs__list--pills .tabs__tab.is-active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-1);
+}
+
+/* segmented 变体 */
+.tabs__list--segmented {
+  gap: 0;
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  padding: var(--space-1);
+  border-bottom: var(--border-w) solid var(--border);
+}
+
+.tabs__list--segmented .tabs__tab {
+  flex: 1 1 0;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+}
+
+.tabs__list--segmented .tabs__tab.is-active {
+  background: var(--surface-1);
+  color: var(--text-1);
+  box-shadow: var(--shadow-1);
+}
+
+.tabs__panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  padding-top: var(--space-4);
+}
+
+.tabs__panel:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}

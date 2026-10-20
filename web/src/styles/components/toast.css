@@ -1,0 +1,177 @@
+/* Toast · BEM: .toast-host / .toast / .toast__icon / .toast__body */
+
+.toast-host {
+  position: fixed;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  pointer-events: none;
+  max-width: min(420px, calc(100vw - var(--space-8)));
+}
+
+.toast-host--top-right {
+  top: var(--space-4);
+  right: var(--space-4);
+  align-items: flex-end;
+}
+
+.toast-host--top-center {
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.toast-host--bottom-right {
+  bottom: var(--space-4);
+  right: var(--space-4);
+  align-items: flex-end;
+  flex-direction: column-reverse;
+}
+
+.toast-host--bottom-center {
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  flex-direction: column-reverse;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  pointer-events: auto;
+  animation: toast-in var(--dur-base) var(--ease-out);
+}
+
+.toast.is-leaving {
+  animation: toast-out var(--dur-fast) var(--ease-in-out) forwards;
+}
+
+.toast__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.toast__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.toast__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.toast__title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-1);
+  line-height: var(--lh-tight);
+}
+
+.toast__message {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  line-height: var(--lh-normal);
+  overflow-wrap: break-word;
+}
+
+.toast__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.toast__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  color: var(--text-3);
+  transition: color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.toast__close:hover {
+  color: var(--text-1);
+  background: var(--surface-2);
+}
+
+.toast__close:focus-visible {
+  box-shadow: var(--ring);
+}
+
+.toast__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: var(--accent);
+  animation: toast-progress linear forwards;
+}
+
+.toast {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------- 语义变体 */
+
+.toast--info { border-left: 3px solid var(--accent); }
+.toast--info .toast__icon { color: var(--accent); }
+.toast--info .toast__progress { background: var(--accent); }
+
+.toast--success { border-left: 3px solid var(--ok); }
+.toast--success .toast__icon { color: var(--ok); }
+.toast--success .toast__progress { background: var(--ok); }
+
+.toast--warn { border-left: 3px solid var(--warn); }
+.toast--warn .toast__icon { color: var(--warn); }
+.toast--warn .toast__progress { background: var(--warn); }
+
+.toast--error { border-left: 3px solid var(--danger); }
+.toast--error .toast__icon { color: var(--danger); }
+.toast--error .toast__progress { background: var(--danger); }
+
+.toast--loading .toast__icon { color: var(--text-2); }
+.toast--loading .toast__progress { display: none; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(12px); }
+}
+
+@keyframes toast-progress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+/* 过渡组（ToastHost 用 TransitionGroup） */
+.toast-enter-active { animation: toast-in var(--dur-base) var(--ease-out); }
+.toast-leave-active { animation: toast-out var(--dur-fast) var(--ease-in-out); }
+.toast-move { transition: transform var(--dur-base) var(--ease-out); }

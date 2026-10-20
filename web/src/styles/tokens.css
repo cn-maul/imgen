@@ -1,0 +1,252 @@
+/* ============================================================================
+ * Imgen · 设计令牌层（单一来源）
+ * ----------------------------------------------------------------------------
+ * 这是全站唯一的取值来源。任何颜色、间距、圆角、阴影、动效时长都必须在这里
+ * 定义后引用，禁止在组件 CSS 里写魔法数字或字面颜色。
+ *
+ * 主题策略：
+ *   1. :root 定义「空间/排版/动效/层级」等与主题无关的结构令牌；
+ *   2. :root 同时给出深色主题色彩（项目默认 data-theme="dark"）；
+ *   3. [data-theme="light"] 覆盖色彩；
+ *   4. 未显式设置 data-theme 时，跟随系统 prefers-color-scheme。
+ *
+ * 与 Canvas 取色：组件里需要取色时用 getComputedStyle(document.documentElement)
+ *   .getPropertyValue('--accent')，不要另抄一份常量。
+ * ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------- 字体 */
+  --font-sans:
+    'Inter', 'Segoe UI', system-ui, -apple-system, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  --font-mono:
+    'JetBrains Mono', 'Cascadia Code', 'SFMono-Regular', Consolas,
+    'Liberation Mono', Menlo, monospace;
+
+  /* ------------------------------------------------------------ 字号阶梯 */
+  --fs-xs: 0.75rem;   /* 12 */
+  --fs-sm: 0.8125rem; /* 13 */
+  --fs-md: 0.875rem;  /* 14 · 正文基准 */
+  --fs-lg: 1rem;      /* 16 */
+  --fs-xl: 1.125rem;  /* 18 */
+  --fs-2xl: 1.375rem; /* 22 */
+  --fs-3xl: 1.75rem;  /* 28 */
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ------------------------------------------------------------ 行高阶梯 */
+  --lh-tight: 1.2;
+  --lh-normal: 1.55;
+  --lh-loose: 1.75;
+
+  /* -------------------------------------------------------------- 间距表 */
+  --space-1: 0.25rem;  /*  4 */
+  --space-2: 0.5rem;   /*  8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.25rem;  /* 20 */
+  --space-6: 1.5rem;   /* 24 */
+  --space-7: 2rem;     /* 32 */
+  --space-8: 2.5rem;   /* 40 */
+  --space-9: 3rem;     /* 48 */
+  --space-10: 4rem;    /* 64 */
+
+  /* -------------------------------------------------------------- 圆角表 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  /* -------------------------------------------------------------- 边框宽 */
+  --border-w: 1px;
+
+  /* ------------------------------------------------------------ 动效时长 */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  /* ------------------------------------------------------------ 缓动曲线 */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* --------------------------------------------------------- z-index 层级 */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-dropdown: 100;
+  --z-overlay: 200;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-lightbox: 500;
+  --z-toast: 600;
+  --z-tooltip: 700;
+
+  /* ---------------------------------------------------- 布局尺寸（可变） */
+  --header-h: 52px;
+  --panel-w: 320px;
+
+  /* ---------------------------------------------------------- 深色主题色 */
+  --surface-0: #0b0d11; /* 页面底 */
+  --surface-1: #12151b; /* 卡片 / 面板 */
+  --surface-2: #1a1e26; /* 输入框 / 悬浮态 */
+  --surface-3: #242932; /* 激活 / 分隔块 */
+
+  --text-1: #e8ecf3; /* 主文本 */
+  --text-2: #a8b2c1; /* 次要文本 */
+  --text-3: #6b7684; /* 弱化 / 占位符 */
+
+  --border: #2a303b;
+  --border-strong: #3a424f;
+
+  --accent: #5b8cff;
+  --accent-hover: #7aa2ff;
+  --accent-active: #4471e0;
+  --accent-fg: #ffffff;
+  --accent-bg: rgba(91, 140, 255, 0.14);
+
+  --danger: #f2565c;
+  --danger-hover: #ff7a80;
+  --danger-fg: #ffffff;
+  --danger-bg: rgba(242, 86, 92, 0.14);
+
+  --warn: #f0a63c;
+  --warn-hover: #ffbe63;
+  --warn-fg: #241703;
+  --warn-bg: rgba(240, 166, 60, 0.14);
+
+  --ok: #35c48a;
+  --ok-hover: #56dba2;
+  --ok-fg: #04231a;
+  --ok-bg: rgba(53, 196, 138, 0.14);
+
+  /* 语义别名：三态色统一走这里 */
+  --state-error: var(--danger);
+  --state-error-fg: var(--danger-fg);
+  --state-error-bg: var(--danger-bg);
+  --state-warn: var(--warn);
+  --state-warn-bg: var(--warn-bg);
+  --state-ok: var(--ok);
+  --state-ok-bg: var(--ok-bg);
+
+  /* 阴影：深色下靠边框提亮而非单纯压暗 */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 12px 40px rgba(0, 0, 0, 0.55);
+
+  /* 焦点环 */
+  --ring: 0 0 0 2px var(--surface-0), 0 0 0 4px var(--accent);
+
+  /* 遮罩 */
+  --overlay: rgba(6, 8, 12, 0.66);
+
+  /* 滚动条 */
+  --scrollbar-thumb: #343b47;
+  --scrollbar-thumb-hover: #454e5d;
+  --scrollbar-track: transparent;
+
+  /* 骨架屏底色与高光 */
+  --skeleton-base: var(--surface-2);
+  --skeleton-shine: var(--surface-3);
+
+  /* CSS 变量主题标识，供 JS 读取（可选） */
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------- 浅色主题覆盖 */
+[data-theme='light'] {
+  --surface-0: #f5f6f8;
+  --surface-1: #ffffff;
+  --surface-2: #f0f2f5;
+  --surface-3: #e3e7ee;
+
+  --text-1: #10141a;
+  --text-2: #55606f;
+  --text-3: #8a94a3;
+
+  --border: #dfe3ea;
+  --border-strong: #c4cad4;
+
+  --accent: #2f62e0;
+  --accent-hover: #1f4dc0;
+  --accent-active: #173d9c;
+  --accent-fg: #ffffff;
+  --accent-bg: rgba(47, 98, 224, 0.1);
+
+  --danger: #d92d36;
+  --danger-hover: #b81f27;
+  --danger-fg: #ffffff;
+  --danger-bg: rgba(217, 45, 54, 0.1);
+
+  --warn: #b9700a;
+  --warn-hover: #9a5c05;
+  --warn-fg: #ffffff;
+  --warn-bg: rgba(185, 112, 10, 0.12);
+
+  --ok: #10815a;
+  --ok-hover: #0c6647;
+  --ok-fg: #ffffff;
+  --ok-bg: rgba(16, 129, 90, 0.12);
+
+  --shadow-1: 0 1px 2px rgba(16, 20, 26, 0.08);
+  --shadow-2: 0 4px 14px rgba(16, 20, 26, 0.1);
+  --shadow-3: 0 12px 36px rgba(16, 20, 26, 0.14);
+
+  --overlay: rgba(24, 28, 35, 0.38);
+
+  --scrollbar-thumb: #c2c8d2;
+  --scrollbar-thumb-hover: #a8b0bd;
+
+  color-scheme: light;
+}
+
+/* 未显式设置 data-theme 时跟随系统偏好（:root 已是深色，这里只处理浅色） */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --surface-0: #f5f6f8;
+    --surface-1: #ffffff;
+    --surface-2: #f0f2f5;
+    --surface-3: #e3e7ee;
+
+    --text-1: #10141a;
+    --text-2: #55606f;
+    --text-3: #8a94a3;
+
+    --border: #dfe3ea;
+    --border-strong: #c4cad4;
+
+    --accent: #2f62e0;
+    --accent-hover: #1f4dc0;
+    --accent-active: #173d9c;
+    --accent-fg: #ffffff;
+    --accent-bg: rgba(47, 98, 224, 0.1);
+
+    --danger: #d92d36;
+    --danger-hover: #b81f27;
+    --danger-fg: #ffffff;
+    --danger-bg: rgba(217, 45, 54, 0.1);
+
+    --warn: #b9700a;
+    --warn-hover: #9a5c05;
+    --warn-fg: #ffffff;
+    --warn-bg: rgba(185, 112, 10, 0.12);
+
+    --ok: #10815a;
+    --ok-hover: #0c6647;
+    --ok-fg: #ffffff;
+    --ok-bg: rgba(16, 129, 90, 0.12);
+
+    --shadow-1: 0 1px 2px rgba(16, 20, 26, 0.08);
+    --shadow-2: 0 4px 14px rgba(16, 20, 26, 0.1);
+    --shadow-3: 0 12px 36px rgba(16, 20, 26, 0.14);
+
+    --overlay: rgba(24, 28, 35, 0.38);
+
+    --scrollbar-thumb: #c2c8d2;
+    --scrollbar-thumb-hover: #a8b0bd;
+
+    color-scheme: light;
+  }
+}

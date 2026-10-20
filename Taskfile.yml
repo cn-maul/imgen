@@ -1,0 +1,100 @@
+version: '3'
+
+vars:
+  BINARY: imgen{{if eq OS "windows"}}.exe{{end}}
+  # 真实前端产物打包进二进制；纯后端编译不带此 tag（用 dist_stub 占位）。
+  WEBTAG: imgenweb
+
+tasks:
+  default:
+    desc: 构建前端 + 后端（带前端产物）
+    cmds:
+      - task: build:web
+      - task: build:go
+
+  build:web:
+    desc: 构建 Vue 前端到 internal/web/dist
+    dir: web
+    cmds:
+      - pnpm install --frozen-lockfile
+      - pnpm run build
+
+  build:go:
+    desc: 构建 Go 二进制（需先 build:web，否则用占位页）
+    cmds:
+      - go build -tags {{.WEBTAG}} -o {{.BINARY}} ./cmd/imgen
+
+  build:go:stub:
+    desc: 纯后端构建，不含前端（CI 快速编译用）
+    cmds:
+      - go build -o {{.BINARY}} ./cmd/imgen
+
+  dev:
+    desc: 前端 Vite dev server（另需 go run -tags dev ./cmd/imgen serve）
+    dir: web
+    cmds:
+      - pnpm run dev
+
+  run:
+    desc: 直接运行（不带前端，用于接口调试）
+    cmds:
+      - go run ./cmd/imgen serve
+
+  test:
+    desc: 跑全部 Go 单测
+    cmds:
+      - go test ./...
+
+  vet:
+    desc: 静态检查
+    cmds:
+      - go vet ./...
+      - go vet -tags {{.WEBTAG}} ./...
+
+  check:
+    desc: 全量校验：vet + test + 前端类型检查 + 契约校验
+    cmds:
+      - task: vet
+      - task: test
+      - task: typecheck
+      - task: check:render
+      - task: check:contract
+
+  smoke:
+    desc: 冒烟：起服务 → 校验各接口 → 跑前端契约校验
+    cmds:
+      - pwsh -NoProfile -File scripts/smoke.ps1
+
+  typecheck:
+    desc: 前端类型检查
+    dir: web
+    cmds:
+      - pnpm exec vue-tsc --noEmit
+
+  check:render:
+    desc: 提示词渲染校验（纯函数，不依赖服务）
+    dir: web
+    cmds:
+      - pnpm run check:render
+
+  check:contract:
+    desc: 校验前端类型与真实后端响应一致（需先起服务）
+    dir: web
+    cmds:
+      - pnpm run check:contract
+
+  clean:
+    desc: 清理构建产物
+    cmds:
+      - go clean
+      - rm -rf internal/web/dist {{.BINARY}}
+
+  docker:build:
+    desc: 构建 Docker 镜像（前端 + 纯 Go 静态二进制内嵌 dist）
+    cmds:
+      - docker build -t imgen:latest .
+
+  docker:run:
+    desc: 启动容器（数据卷挂宿主 ./data，端口 8080）
+    cmds:
+      - docker run -d --name imgen -p 8080:8080 -v imgen-data:/home/imgen/data -e IMGEN_MASTER_KEY={{.KEY}} imgen:latest
